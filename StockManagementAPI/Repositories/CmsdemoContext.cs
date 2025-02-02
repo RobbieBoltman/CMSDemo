@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using StockManagementAPI.Repositories.DataModels;
 
-namespace StockManagementAPI.Models;
+namespace StockManagementAPI.Repositories;
 
 public partial class CmsdemoContext : DbContext
 {
@@ -16,14 +17,8 @@ public partial class CmsdemoContext : DbContext
     }
 
     public virtual DbSet<Image> Images { get; set; }
-
     public virtual DbSet<StockAccessory> StockAccessories { get; set; }
-
     public virtual DbSet<StockItem> StockItems { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=Robbie-PC;Initial Catalog=CMSDemo;Integrated Security=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StockManagementAPI.Models;
+namespace StockManagementAPI.Repositories.DataModels;
 
 public partial class StockAccessory
 {
