@@ -1,11 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { ServiceService } from '../service.service';
+import { ButtonModule } from 'primeng/button';
+import { DataViewModule } from 'primeng/dataview';
+import { TagModule } from 'primeng/tag';
+import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, CardModule, NgbModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  lstStock: any = [];
+  loading = false;
 
+  constructor(private service: ServiceService) {}
+
+  ngOnInit(): void {
+    this.service.listAllStockItemsDashboard().subscribe({
+      next: (res :any )=> {
+        this.lstStock = res
+        console.log(this.lstStock);
+      },
+      error: (error:any)=> {
+        console.log(error);
+      }
+    });
+  }
 }

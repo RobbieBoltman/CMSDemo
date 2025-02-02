@@ -1,1 +1,41 @@
-<p>dashboard works!</p>
+<p-dataview #dv [value]="lstStock">
+    <ng-template #list let-items>
+        <div class="">
+            <div *ngFor="let item of items;" class="col-span-12">
+                <div
+                    class=""
+                    [ngClass]=""
+                >
+                    <div class="">
+                        <!-- <img
+                            class="block xl:block mx-auto rounded-border w-full"
+                            [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + item.image"
+                        /> -->
+                    </div>
+                    <div class="">
+                        <div class="">
+                            <div>
+                                <span class="">{{ item.make }}</span>
+                                <div class="">{{ item.model }}</div>
+                            </div>
+                            <div class="" style="border-radius: 30px">
+                                <div
+                                    class=""                                    
+                                >
+                                    <span class="">{{
+                                        item.modelYear
+                                    }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <span class="">{{
+                                'R' + item.retailPrice
+                            }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-dataview>

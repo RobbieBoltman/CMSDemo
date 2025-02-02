@@ -30,7 +30,12 @@ namespace StockManagementAPI.Controllers
             {
                 Id = s.Id,
                 Dtcreated = s.Dtcreated,
-                Images = s.Images.ToList(),
+                Images = s.Images.Select(i => new ImageViewModel()
+                {
+                    Id = i.Id,
+                    ImageBinary = i.ImageBinary,
+                    Name = i.Name
+                }).ToList(),
                 Kms = s.Kms,
                 Make = s.Make,
                 Model = s.Model,

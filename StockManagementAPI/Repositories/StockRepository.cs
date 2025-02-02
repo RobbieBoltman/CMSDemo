@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StockManagementAPI.Repositories.DataModels;
+using System.Net.WebSockets;
 
 namespace StockManagementAPI.Repositories
 {
@@ -34,7 +35,11 @@ namespace StockManagementAPI.Repositories
 
         public async Task<List<StockItem>> ListAllStockItems()
         {
-            return await _context.StockItems.ToListAsync();
+            var result = await _context.StockItems
+                .Include(si => si.Images)
+                .ToListAsync();
+
+            return result;
         }
 
         public async Task<bool> UpsertStockItem(StockItem stockItem)

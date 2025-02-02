@@ -11,6 +11,6 @@ namespace StockManagementAPI.ViewModels
         public int Kms { get; set; }
         public decimal RetailPrice { get; set; }
         public DateTime Dtcreated { get; set; }
-        public virtual List<Image> Images { get; set; } = new List<Image>();
+        public virtual List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
     }
 }
