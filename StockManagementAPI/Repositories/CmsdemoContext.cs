@@ -24,7 +24,7 @@ public partial class CmsdemoContext : DbContext
     {
         modelBuilder.Entity<Image>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -37,7 +37,7 @@ public partial class CmsdemoContext : DbContext
 
         modelBuilder.Entity<StockAccessory>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Description)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -50,7 +50,7 @@ public partial class CmsdemoContext : DbContext
 
         modelBuilder.Entity<StockItem>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Colour)
                 .HasMaxLength(16)
                 .IsUnicode(false);

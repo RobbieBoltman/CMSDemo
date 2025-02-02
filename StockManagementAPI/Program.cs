@@ -18,7 +18,7 @@ builder.Services.AddDbContext<CmsdemoContext>(options =>
 
 });
 
-builder.Services.AddScoped<IStockRepository, StockRepository>();
+builder.Services.AddTransient<IStockRepository, StockRepository>();
 
 var app = builder.Build();
 

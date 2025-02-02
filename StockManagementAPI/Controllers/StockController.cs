@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using StockManagementAPI.Repositories;
 using StockManagementAPI.Repositories.DataModels;
 using StockManagementAPI.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace StockManagementAPI.Controllers
 {
@@ -79,7 +80,40 @@ namespace StockManagementAPI.Controllers
         [HttpPost("UpsertStockItem")]
         public async Task<bool> UpsertStockItem(StockItemViewModel stockItem)
         {
-            return false;
+            return await _stockRepository.UpsertStockItem(new StockItem()
+            {
+                Id = stockItem.Id,
+                RegNo = stockItem.RegNo,
+                Make = stockItem.Make,
+                Model = stockItem.Model,
+                ModelYear = stockItem.ModelYear,
+                Kms = stockItem.Kms,
+                Colour = stockItem.Colour,
+                Vin = stockItem.Vin,
+                RetailPrice = stockItem.RetailPrice,
+                CostPrice = stockItem.CostPrice,
+                Dtcreated = stockItem.Dtcreated,
+                Dtupdated = stockItem.Dtupdated,
+                Images = stockItem.Images?.Select(i => new Image
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    ImageBinary = i.ImageBinary,
+                    StockItemId = stockItem.Id
+                }).ToList() ?? new List<Image>(),
+                StockAccessories = stockItem.StockAccessories?.Select(i => new StockAccessory
+                {
+                    Id = i.Id,
+                    Description = i.Description,
+                    StockItemId = stockItem.Id
+                }).ToList() ?? new List<StockAccessory>()
+            });
+        }
+
+        [HttpDelete]
+        public async Task<bool> DeleteStockItem(int id)
+        {
+            return await _stockRepository.DeleteStockItemById(id);
         }
     }
 }
