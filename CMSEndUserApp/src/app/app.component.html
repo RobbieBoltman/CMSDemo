@@ -1,1 +1,36 @@
-<router-outlet></router-outlet>
+<!-- Master Layout -->
+<div class="container-fluid">
+    <!-- Header -->
+    <header class="bg-light p-3 shadow-sm">
+      <div class="d-flex justify-content-between align-items-center flex-row-reverse ">
+        
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="profileDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-person-circle"></i> Profile
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item text-danger" (click)="logout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+        <h1 class="h4 mb-0">CMS Demo</h1>
+      </div>
+    </header>
+
+    <main class="flex-grow-1 p-4">
+      <router-outlet></router-outlet>
+    </main>
+  
+    <footer class="bg-light p-3 text-center">
+      <p class="mb-0">&copy; 2025 CMS Demo. All rights reserved.</p>
+    </footer>
+  </div>
