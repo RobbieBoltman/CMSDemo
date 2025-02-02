@@ -56,5 +56,14 @@ namespace StockManagementAPI.Repositories
             }
         }
 
+        public async Task<List<Image>> ListAllImagesByStockItemId(int stockItemId)
+        {
+            return await _context.Images.Where(i => i.StockItemId == stockItemId).ToListAsync();
+        }
+
+        public async Task<List<StockAccessory>> ListAllAccessoriesByStockItemId(int stockItemId)
+        {
+            return await _context.StockAccessories.Where(a => a.StockItemId == stockItemId).ToListAsync();
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace StockManagementAPI.Repositories
         Task<StockItem> GetStockItemById(int id);
         Task<bool> UpsertStockItem(StockItem stockItem);
         Task<bool> DeleteStockItemById(int id);
-
+        Task<List<Image>> ListAllImagesByStockItemId(int stockItemId);
+        Task<List<StockAccessory>> ListAllAccessoriesByStockItemId(int stockItemId);
     }
 }
