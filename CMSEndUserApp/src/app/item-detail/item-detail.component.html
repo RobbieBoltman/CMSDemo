@@ -46,25 +46,17 @@
       </div>
     </div>
   
-<!-- Images Section -->
-<div formArrayName="images" class="mt-4">
-    <h3>Images</h3>
-    <button type="button" class="btn btn-primary btn-sm mb-3">Add Image</button>
-    <div *ngFor="let image of images.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <!-- Display the image if imageBinary is a valid URL or base64 string -->
-          <img [src]="image.get('imageBinary')" alt="Image" class="img-fluid">
-          <!-- Input field for image binary (e.g., file upload or base64 string) -->
+    <div formArrayName="images" class="mt-4">
+      <h3>Images</h3>
+      <button type="button" class="btn btn-primary btn-sm mb-3" >Add Image</button>
+      <div *ngFor="let image of images.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
+        <div class="col-md-3">
+          <img *ngIf="image.get('imageBinary')?.value" [src]="image.get('imageBinary')?.value" alt="{{ image.get('name')?.value }}" class="img-fluid" />
+          <button type="button" (click)="removeImage(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
         </div>
-        <div class="col-md-6">
-          <label for="imageName{{i}}" class="form-label">Image Name</label>
-          <input id="imageName{{i}}" formControlName="name" class="form-control">
-        </div>
+        
       </div>
-      <button type="button" (click)="removeImage(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
     </div>
-  </div>
   
     <!-- Stock Accessories Section -->
     <div formArrayName="stockAccessories" class="mt-4">

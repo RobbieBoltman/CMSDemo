@@ -54,10 +54,11 @@ export class ItemDetailComponent {
   }
 
   addImage(id: any, name: any, binary: any): void {
+    debugger;
     this.images.push(this.fb.group({
       id: id,
       name: name,
-      imageBinary: binary,
+      imageBinary: 'data:{content/type};base64,' + binary,
       stockItemId: this.id
     }));
   }
@@ -95,8 +96,8 @@ export class ItemDetailComponent {
     };
 
     this.stockItemForm.patchValue(stockItem);
-
-    this.itemDetails.images.forEach((i:any) => this.addImage(i.id, i.name, i.binary));
+    
+    this.itemDetails.images.forEach((i:any) => this.addImage(i.id, i.name, i.imageBinary));
     stockItem.stockAccessories.forEach(accessory => this.addStockAccessory());
 
     this.images.patchValue(stockItem.images);
