@@ -1,0 +1,88 @@
+<form [formGroup]="stockItemForm" (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="regNo" class="form-label">Registration Number</label>
+        <input id="regNo" formControlName="regNo" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="make" class="form-label">Make</label>
+        <input id="make" formControlName="make" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="model" class="form-label">Model</label>
+        <input id="model" formControlName="model" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="modelYear" class="form-label">Model Year</label>
+        <input id="modelYear" formControlName="modelYear" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="kms" class="form-label">Kilometers</label>
+        <input id="kms" formControlName="kms" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="colour" class="form-label">Colour</label>
+        <input id="colour" formControlName="colour" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="vin" class="form-label">VIN</label>
+        <input id="vin" formControlName="vin" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="retailPrice" class="form-label">Retail Price</label>
+        <input id="retailPrice" formControlName="retailPrice" class="form-control">
+      </div>
+  
+      <div class="col-md-6">
+        <label for="costPrice" class="form-label">Cost Price</label>
+        <input id="costPrice" formControlName="costPrice" class="form-control">
+      </div>
+    </div>
+  
+<!-- Images Section -->
+<div formArrayName="images" class="mt-4">
+    <h3>Images</h3>
+    <button type="button" class="btn btn-primary btn-sm mb-3">Add Image</button>
+    <div *ngFor="let image of images.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <!-- Display the image if imageBinary is a valid URL or base64 string -->
+          <img [src]="image.get('imageBinary')" alt="Image" class="img-fluid">
+          <!-- Input field for image binary (e.g., file upload or base64 string) -->
+        </div>
+        <div class="col-md-6">
+          <label for="imageName{{i}}" class="form-label">Image Name</label>
+          <input id="imageName{{i}}" formControlName="name" class="form-control">
+        </div>
+      </div>
+      <button type="button" (click)="removeImage(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
+    </div>
+  </div>
+  
+    <!-- Stock Accessories Section -->
+    <div formArrayName="stockAccessories" class="mt-4">
+      <h3>Stock Accessories</h3>
+      <button type="button" (click)="addStockAccessory()" class="btn btn-primary btn-sm mb-3">Add Accessory</button>
+      <div *ngFor="let accessory of stockAccessories.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="accessoryDescription{{i}}" class="form-label">Description</label>
+            <input id="accessoryDescription{{i}}" formControlName="description" class="form-control">
+          </div>
+        </div>
+        <button type="button" (click)="removeStockAccessory(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
+      </div>
+    </div>
+  
+    <!-- Submit Button -->
+    <div class="mt-4">
+      <button type="submit" [disabled]="!stockItemForm.valid" class="btn btn-success">Submit</button>
+    </div>
+  </form>

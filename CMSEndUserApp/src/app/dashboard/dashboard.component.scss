@@ -1,0 +1,6 @@
+.stock-item-card {
+    cursor: pointer;
+    &:hover {
+        box-shadow: 5px 5px #888888 !important;
+    }
+}

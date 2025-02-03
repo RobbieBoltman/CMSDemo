@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, NgbModule],
+    imports: [CommonModule, RouterOutlet, NgbModule, RouterModule, ReactiveFormsModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

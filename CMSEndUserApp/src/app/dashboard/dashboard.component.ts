@@ -6,10 +6,11 @@ import { TagModule } from 'primeng/tag';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, CardModule, NgbModule],
+  imports: [ButtonModule, DataViewModule, TagModule, CommonModule, CardModule, NgbModule, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

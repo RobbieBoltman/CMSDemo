@@ -15,4 +15,9 @@ export class ServiceService {
     const header = new HttpHeaders().set('Content-type', 'application/json');
     return this.http.get(`${this.apiUrl}ListAllStockItemsDashboard`, {headers: header});
   }
+
+  getStockItemDetail(id: any): Observable<any> {
+    const header = new HttpHeaders().set('Content-type', 'application/json');
+    return this.http.get(`${this.apiUrl}GetStockItemById/`+id, {headers: header});
+  }
 }
