@@ -97,7 +97,7 @@ namespace StockManagementAPI.Controllers
                 Vin = stockItem.Vin,
                 RetailPrice = stockItem.RetailPrice,
                 CostPrice = stockItem.CostPrice,
-                dtCreated = stockItem.dtCreated,
+                dtCreated = stockItem.dtCreated != DateTime.MinValue ? stockItem.dtCreated : DateTime.Now,
                 dtUpdated = DateTime.Now,
                 Images = stockItem.Images?.Select(i => new Image
                 {

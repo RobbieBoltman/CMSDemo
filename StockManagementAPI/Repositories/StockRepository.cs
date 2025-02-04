@@ -29,6 +29,7 @@ namespace StockManagementAPI.Repositories
             }
             catch
             {
+                //TODO: Log exception
                 return null;
             }
         }
@@ -58,20 +59,41 @@ namespace StockManagementAPI.Repositories
 
                     var accessoriesToRemove = existingStockItem.StockAccessories
                         .Where(ea => !stockItem.StockAccessories
-                            .Any(na => na.Description == ea.Description && na.Id == ea.Id))
+                            .Any(na => na.Id == ea.Id))
+                        .ToList();
+                    _context.StockAccessories.RemoveRange(accessoriesToRemove);
+
+                    foreach (var updatedAccessory in stockItem.StockAccessories)
+                    {
+                        if (updatedAccessory.Id != 0)
+                        {
+                            var existingAccessory = existingStockItem.StockAccessories
+                                .FirstOrDefault(ea => ea.Id == updatedAccessory.Id);
+
+                            if (existingAccessory != null && existingAccessory.Description != updatedAccessory.Description)
+                            {                                
+                                existingAccessory.Description = updatedAccessory.Description;
+                                _context.StockAccessories.Update(existingAccessory);
+                            }
+                        }
+                    }
+
+                    var newAccessories = stockItem.StockAccessories
+                        .Where(na => na.Id == 0)
                         .ToList();
 
-                    _context.StockAccessories.RemoveRange(accessoriesToRemove);
+                    foreach (var newAccessory in newAccessories)                    
+                        _context.StockAccessories.Add(newAccessory);
+
+                    var imagesToRemove = existingStockItem.Images
+                        .Where(ei => !stockItem.Images.Any(ni => ni.Id == ei.Id))
+                        .ToList();
+                    _context.Images.RemoveRange(imagesToRemove);
 
                     var imagesToAdd = stockItem.Images
                         .Where(ni => ni.Id == 0)
                         .ToList();
                     _context.Images.AddRange(imagesToAdd);
-
-                    var accessoriesToAdd = stockItem.StockAccessories
-                        .Where(na => na.Id == 0)
-                        .ToList();
-                    _context.StockAccessories.AddRange(accessoriesToAdd);
 
                     _context.Entry(existingStockItem).CurrentValues.SetValues(stockItem);
                 }
@@ -83,33 +105,10 @@ namespace StockManagementAPI.Repositories
             }
             catch (Exception ex)
             {
-                // Consider logging the exception
+                // TODO: Add logging
                 return false;
             }
         }
-
-
-        //public async Task<bool> UpsertStockItem(StockItem stockItem)
-        //{
-        //    try
-        //    {
-        //        if (stockItem.Id > 0)
-        //        {
-        //            var existingStockItemImages = _context.Images.Where(i => i.StockItemId == stockItem.Id).ToList();
-        //            var existingStockItemAccessories = _context.StockAccessories.Where(a => a.StockItemId == stockItem.Id).ToList();
-
-        //            _context.StockItems.Update(stockItem);
-        //        }
-        //        else
-        //            _context.StockItems.Add(stockItem);
-        //        _context.SaveChanges();
-        //        return true;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
         public async Task<bool> DeleteStockItemById(int id)
         {
             try
