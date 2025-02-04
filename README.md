@@ -36,5 +36,5 @@
 
 **Incompleted items**:
 
-  • Login and user authentication (Dependencies have been installed and startup has been configured, yet the item system does not interact with it.)
+  • Login and user authentication (Dependencies have been installed and startup has been configured, yet the system does not interact with it.)
   
