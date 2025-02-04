@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StockManagementAPI.Repositories;
 using System;
@@ -18,6 +19,17 @@ builder.Services.AddDbContext<CmsdemoContext>(options =>
         sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
 
 });
+builder.Services.AddDbContext<IdentityDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
+
+});
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<IdentityDbContext>();
 
 builder.Services.AddCors(options =>
 {
@@ -32,8 +44,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddTransient<IStockRepository, StockRepository>();
 
 var app = builder.Build();
+
+app.MapIdentityApi<IdentityUser>();
+
 app.UseCors("CorsPolicy");
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

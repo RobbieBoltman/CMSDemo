@@ -23,8 +23,11 @@ export class ServiceService {
 
   upsertStockItemDetail(stockItemDetail: any): Observable<any>{
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    // const payload = { stockItem: stockItemDetail };  
-    // return this.http.post<boolean>(`${this.apiUrl}UpsertStockItem`, payload, { headers });
     return this.http.post<boolean>(`${this.apiUrl}UpsertStockItem`, stockItemDetail, { headers });
   }  
+
+  register(user: { email: string, password: string, confirmPassword: string }): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(`${this.apiUrl}auth/register`, user, { headers });
+  }
 }
