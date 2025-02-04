@@ -3,12 +3,15 @@
         <div class="row">
             <div *ngFor="let item of items;" class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="pe-auto card h-100 shadow-sm stock-item-card" [routerLink]="['/item-detail', item.id]">
+                    <i
+                        class="fas fa-trash-alt text-danger position-absolute top-0 end-0 m-2 p-2 delete-icon"
+                        (click)="deleteStockItem(item.id)"
+                    ></i>
                     <div class="card-body" >
                         <img
                         *ngIf="item.images && item.images.length > 0"
                         class="card-img-top img-fluid rounded"
                         [src]="'data:image/jpeg;base64,' + item.images[0].imageBinary"
-                        alt="{{ item.make }} {{ item.model }}"
                     />
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>

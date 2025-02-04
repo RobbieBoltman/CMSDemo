@@ -45,10 +45,14 @@ namespace StockManagementAPI.Controllers
 
             return allStockDashboardViewModel;
         }
+
         [HttpGet("GetStockItemById/{id}")]
         public async Task<StockItemViewModel> GetStockItemById(int id)
         {
             var stockItem = await _stockRepository.GetStockItemById(id);
+
+            if (id == 0)
+                return new StockItemViewModel();
 
             return new StockItemViewModel()
             {

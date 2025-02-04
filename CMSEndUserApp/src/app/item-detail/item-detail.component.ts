@@ -78,6 +78,7 @@ export class ItemDetailComponent {
 
     
   uploadImage(e: Event): void {
+    //TODO: Validate image size
     const fileInput = e.target as HTMLInputElement;
     const file = fileInput.files?.[0];
   

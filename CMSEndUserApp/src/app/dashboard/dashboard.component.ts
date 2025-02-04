@@ -31,4 +31,13 @@ export class DashboardComponent {
       }
     });
   }
+
+  addStockItem(){
+    //TODO: Implement new page
+  }
+
+  deleteStockItem(id:number) {
+    //TODO: Implement Delete
+    console.log(id);
+  }
 }
