@@ -29,7 +29,7 @@ namespace StockManagementAPI.Controllers
             allStock.ForEach(s => allStockDashboardViewModel.Add(new StockItemDashboardViewModel()
             {
                 Id = s.Id,
-                Dtcreated = s.Dtcreated,
+                dtCreated = s.dtCreated,
                 Images = s.Images.Select(i => new ImageViewModel()
                 {
                     Id = i.Id,
@@ -62,8 +62,8 @@ namespace StockManagementAPI.Controllers
                 Vin = stockItem.Vin,
                 RetailPrice = stockItem.RetailPrice,
                 CostPrice = stockItem.CostPrice,
-                Dtcreated = stockItem.Dtcreated,
-                Dtupdated = stockItem.Dtupdated,
+                dtCreated = stockItem.dtCreated,
+                dtUpdated = stockItem.dtUpdated,
 
                 Images = (await _stockRepository.ListAllImagesByStockItemId(id))
                          ?.Select(i => new ImageViewModel
@@ -97,8 +97,8 @@ namespace StockManagementAPI.Controllers
                 Vin = stockItem.Vin,
                 RetailPrice = stockItem.RetailPrice,
                 CostPrice = stockItem.CostPrice,
-                Dtcreated = stockItem.Dtcreated,
-                Dtupdated = stockItem.Dtupdated,
+                dtCreated = stockItem.dtCreated,
+                dtUpdated = DateTime.Now,
                 Images = stockItem.Images?.Select(i => new Image
                 {
                     Id = i.Id,

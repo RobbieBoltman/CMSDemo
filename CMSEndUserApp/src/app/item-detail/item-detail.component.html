@@ -1,5 +1,7 @@
-<form [formGroup]="stockItemForm" (ngSubmit)="onSubmit()" class="container mt-4">
-    <div class="row g-3">
+<form [formGroup]="stockItemForm" (ngSubmit)="onSubmit()" class="container mt-4">  
+    <input id="dtcreated" formControlName="dtcreated" class="form-control" type="hidden">
+
+    <div class="row">
       <div class="col-md-6">
         <label for="regNo" class="form-label">Registration Number</label>
         <input id="regNo" formControlName="regNo" class="form-control">
@@ -8,7 +10,7 @@
       <div class="col-md-6">
         <label for="make" class="form-label">Make</label>
         <input id="make" formControlName="make" class="form-control">
-      </div>
+      </div>      
   
       <div class="col-md-6">
         <label for="model" class="form-label">Model</label>
@@ -48,32 +50,39 @@
   
     <div formArrayName="images" class="mt-4">
       <h3>Images</h3>
-      <button type="button" class="btn btn-primary btn-sm mb-3" >Add Image</button>
-      <div *ngFor="let image of images.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
-        <div class="col-md-3">
-          <img *ngIf="image.get('imageBinary')?.value" [src]="image.get('imageBinary')?.value" alt="{{ image.get('name')?.value }}" class="img-fluid" />
-          <button type="button" (click)="removeImage(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
-        </div>
-        
+      <div class="input-group mb-3">
+        <input type="file" class="form-control d-none" (change)="uploadImage($event)" id="fileUpload">
+        <label class="btn btn-primary btn-sm" for="fileUpload">Upload Image</label>
       </div>
-    </div>
-  
-    <!-- Stock Accessories Section -->
-    <div formArrayName="stockAccessories" class="mt-4">
-      <h3>Stock Accessories</h3>
-      <button type="button" (click)="addStockAccessory()" class="btn btn-primary btn-sm mb-3">Add Accessory</button>
-      <div *ngFor="let accessory of stockAccessories.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label for="accessoryDescription{{i}}" class="form-label">Description</label>
-            <input id="accessoryDescription{{i}}" formControlName="description" class="form-control">
+      <div class="row">
+        <div *ngFor="let image of images.controls; let i = index" [formGroupName]="i" class="col-md-4 mb-3 d-flex">
+          <div class="card flex-grow-1">
+            <div class="card-body d-flex flex-column">
+              <img *ngIf="image.get('imageBinary')?.value" [src]="image.get('imageBinary')?.value" alt="{{ image.get('name')?.value }}" class="card-img-top img-fluid" />
+              <div class="mt-auto text-center">
+                <button type="button" (click)="removeImage(i)" class="btn btn-danger btn-sm mt-1">Remove</button>
+              </div>
+            </div>
           </div>
         </div>
-        <button type="button" (click)="removeStockAccessory(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
       </div>
     </div>
-  
-    <!-- Submit Button -->
+
+  <div formArrayName="stockAccessories" class="mt-4">
+    <h3>Stock Accessories</h3>
+    <button type="button" class="btn btn-primary btn-sm mb-3" (click)="addStockAccessoryInput()">Add Accessory</button>
+    <div *ngFor="let accessory of stockAccessories.controls; let i = index" [formGroupName]="i" class="mb-3 p-3">
+      <div class="row">
+        <div class="col-md-6">
+          <input id="accessoryDescription{{i}}" formControlName="description" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <button type="button" (click)="removeStockAccessory(i)" class="btn btn-danger btn-sm mt-2">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class="mt-4">
       <button type="submit" [disabled]="!stockItemForm.valid" class="btn btn-success">Submit</button>
     </div>

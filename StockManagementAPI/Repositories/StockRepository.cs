@@ -56,14 +56,11 @@ namespace StockManagementAPI.Repositories
                     if (existingStockItem == null) 
                         return false;
 
-                    var imagesToRemove = existingStockItem.Images
-                        .Where(ei => !stockItem.Images.Any(ni => ni.Id == ei.Id))
-                        .ToList();
-                    _context.Images.RemoveRange(imagesToRemove);
-
                     var accessoriesToRemove = existingStockItem.StockAccessories
-                        .Where(ea => !stockItem.StockAccessories.Any(na => na.Id == ea.Id))
+                        .Where(ea => !stockItem.StockAccessories
+                            .Any(na => na.Description == ea.Description && na.Id == ea.Id))
                         .ToList();
+
                     _context.StockAccessories.RemoveRange(accessoriesToRemove);
 
                     var imagesToAdd = stockItem.Images

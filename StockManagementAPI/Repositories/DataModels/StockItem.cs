@@ -15,8 +15,8 @@ public class StockItem
     public string Vin { get; set; } = null!;
     public decimal RetailPrice { get; set; }
     public decimal CostPrice { get; set; }
-    public DateTime Dtcreated { get; set; }
-    public DateTime Dtupdated { get; set; }
+    public DateTime dtCreated { get; set; }
+    public DateTime dtUpdated { get; set; }
     public virtual ICollection<Image> Images { get; set; } = new List<Image>();
     public virtual ICollection<StockAccessory> StockAccessories { get; set; } = new List<StockAccessory>();
 }

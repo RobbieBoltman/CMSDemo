@@ -10,7 +10,7 @@ namespace StockManagementAPI.ViewModels
         public int ModelYear { get; set; }
         public int Kms { get; set; }
         public decimal RetailPrice { get; set; }
-        public DateTime Dtcreated { get; set; }
+        public DateTime dtCreated { get; set; }
         public virtual List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
     }
 }

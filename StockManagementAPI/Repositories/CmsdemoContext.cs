@@ -55,10 +55,10 @@ public partial class CmsdemoContext : DbContext
                 .HasMaxLength(16)
                 .IsUnicode(false);
             entity.Property(e => e.CostPrice).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.Dtcreated)
+            entity.Property(e => e.dtCreated)
                 .HasColumnType("datetime")
                 .HasColumnName("DTCreated");
-            entity.Property(e => e.Dtupdated)
+            entity.Property(e => e.dtUpdated)
                 .HasColumnType("datetime")
                 .HasColumnName("DTUpdated");
             entity.Property(e => e.Kms).HasColumnName("KMS");

@@ -14,10 +14,10 @@ import { ActivatedRoute } from '@angular/router';
 export class ItemDetailComponent {
   stockItemForm: FormGroup;
   itemDetails: any;
-  id: any;
+  id: number;
 
   constructor(private fb: FormBuilder, private service: ServiceService, private route: ActivatedRoute) {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.service.getStockItemDetail(this.id).subscribe({
       next: (res :any )=> {
         this.itemDetails = res
@@ -31,6 +31,7 @@ export class ItemDetailComponent {
 
     this.stockItemForm = this.fb.group({
       id: [''],
+      dtcreated: ['', Validators.required],
       regNo: ['', Validators.required],
       make: ['', Validators.required],
       model: ['', Validators.required],
@@ -53,8 +54,7 @@ export class ItemDetailComponent {
     return this.stockItemForm.get('stockAccessories') as FormArray;
   }
 
-  addImage(id: any, name: any, binary: any): void {
-    debugger;
+  addImage(id: number, name: any, binary: any): void {
     this.images.push(this.fb.group({
       id: id,
       name: name,
@@ -63,12 +63,38 @@ export class ItemDetailComponent {
     }));
   }
 
-  addStockAccessory(): void {
+  addStockAccessory(id: number, description: any): void {
     this.stockAccessories.push(this.fb.group({
-      id: [''],
-      description: ['', Validators.required],
-      stockItemId: ['']
+      id: id,
+      description: description,
+      stockItemId: this.id
     }));
+  }
+
+  addStockAccessoryInput(): void {
+    this.addStockAccessory(0, '');
+  }
+
+    
+  uploadImage(e: Event): void {
+    const fileInput = e.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+  
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+  
+      reader.onload = () => {
+        const base64 = reader.result as string; 
+        const base64Data = base64.split(',')[1];
+        this.addImage(0, file.name, base64Data);
+      };
+  
+
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+      };
+    }
   }
 
   removeImage(index: number): void {
@@ -80,8 +106,9 @@ export class ItemDetailComponent {
   }
 
   populateForm(): void {
-    const stockItem = {
-      id: this.itemDetails.id,
+    const stockItem = {      
+      id: this.id,
+      dtcreated: this.itemDetails.dtcreated,
       regNo: this.itemDetails.regNo,
       make: this.itemDetails.make,
       model: this.itemDetails.model,
@@ -98,7 +125,7 @@ export class ItemDetailComponent {
     this.stockItemForm.patchValue(stockItem);
     
     this.itemDetails.images.forEach((i:any) => this.addImage(i.id, i.name, i.imageBinary));
-    stockItem.stockAccessories.forEach(accessory => this.addStockAccessory());
+    this.itemDetails.stockAccessories.forEach((a:any) => this.addStockAccessory(a.id, a.description));
 
     this.images.patchValue(stockItem.images);
     this.stockAccessories.patchValue(stockItem.stockAccessories);
@@ -106,7 +133,23 @@ export class ItemDetailComponent {
 
   onSubmit(): void {
     if (this.stockItemForm.valid) {
-      console.log(this.stockItemForm.value);
+      const formData = JSON.parse(JSON.stringify(this.stockItemForm.value));
+  
+      formData.images = formData.images.map((img: any) => ({
+        ...img,
+        imageBinary: img.imageBinary.split(',')[1] 
+      }));
+  
+      this.service.upsertStockItemDetail(formData).subscribe({
+        next: (response) => {
+          console.log('Stock item saved successfully', response);
+        },
+        error: (error) => {
+          console.error('Error saving stock item', error);
+        }
+      });
+    } else {
+      console.log('Form is invalid');
     }
   }
 }
