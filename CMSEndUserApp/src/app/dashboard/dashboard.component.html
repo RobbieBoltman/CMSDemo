@@ -4,11 +4,12 @@
             <div *ngFor="let item of items;" class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="pe-auto card h-100 shadow-sm stock-item-card" [routerLink]="['/item-detail', item.id]">
                     <div class="card-body" >
-                        <!-- <img
-                            class="card-img-top img-fluid rounded"
-                            [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + item.image"
-                            alt="{{ item.make }} {{ item.model }}"
-                        /> -->
+                        <img
+                        *ngIf="item.images && item.images.length > 0"
+                        class="card-img-top img-fluid rounded"
+                        [src]="'data:image/jpeg;base64,' + item.images[0].imageBinary"
+                        alt="{{ item.make }} {{ item.model }}"
+                    />
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>
                                 <span class="h5 card-title">{{ item.make }}</span>

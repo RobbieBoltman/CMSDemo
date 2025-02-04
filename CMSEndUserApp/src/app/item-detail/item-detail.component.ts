@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
 import { ReactiveFormsModule} from '@angular/forms';
 import { ServiceService } from '../service.service';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-item-detail',
@@ -16,7 +17,7 @@ export class ItemDetailComponent {
   itemDetails: any;
   id: number;
 
-  constructor(private fb: FormBuilder, private service: ServiceService, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private service: ServiceService, private route: ActivatedRoute, private router: Router) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.service.getStockItemDetail(this.id).subscribe({
       next: (res :any )=> {
@@ -143,9 +144,14 @@ export class ItemDetailComponent {
       this.service.upsertStockItemDetail(formData).subscribe({
         next: (response) => {
           console.log('Stock item saved successfully', response);
+          //TODO: Use a snackbar or something similar instead
+          alert('successful update');
+          this.router.navigate(['/']);
         },
         error: (error) => {
           console.error('Error saving stock item', error);
+          //TODO: Use a snackbar or something similar instead
+          alert('an error has occurred');
         }
       });
     } else {
